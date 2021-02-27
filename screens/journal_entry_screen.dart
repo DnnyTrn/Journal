@@ -17,21 +17,20 @@ class EntryJournal extends StatefulWidget {
 class _EntryJournalState extends State<EntryJournal> {
   @override
   Widget build(BuildContext context) {
-    //choosing the option to query the db for entry rather than passing as an object
+    //id can be null to signal screen loaded in landscape mode
     var id = ModalRoute.of(context).settings.arguments;
     var entry;
     final db = DatabaseManager.getInstance();
     if (id == null) {
-      entry = db.getFirstRow();
+      entry = db.getFirstRow(); //query 1st row if in landscape mode
     } else {
-      entry = db.getEntryById(id);
+      entry = db.getEntryById(id); //this screen is coupled with previous screen
     }
-
-    JournalEntry je;
 
     return FutureBuilder<JournalEntry>(
       future: entry,
       builder: (BuildContext context, AsyncSnapshot<JournalEntry> snapshot) {
+        JournalEntry je;
         Widget child;
         if (snapshot.hasData) {
           je = snapshot.data;
