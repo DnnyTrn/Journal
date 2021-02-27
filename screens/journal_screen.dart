@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:journal/screens/journal_entry_screen.dart';
-import 'package:journal/screens/new_entry_screen.dart';
 import 'package:journal/widgets/MyAppBar.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/widgets/Widgets.dart';
@@ -17,12 +16,6 @@ class JournalScreen extends StatefulWidget {
 
   @override
   State createState() => _JournalScreenState();
-  Widget _appBar() {
-    if (showAppBar == true) {
-      return MyAppBar.withSettings(title: myJournal, widgets: []);
-    }
-    return null;
-  }
 }
 
 class _JournalScreenState extends State<JournalScreen> {
@@ -31,16 +24,9 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: widget._appBar(),
-      endDrawer: SettingsDrawer(),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context)
-                .pushNamed(NewEntry.routeName)
-                .then((value) => setState(() {}));
-          }),
+    return ScaffoldWithSettings(
+      showAppBar: widget.showAppBar,
+      title: JournalScreen.routeName,
       body: FutureBuilder<List<JournalEntry>>(
           future: db.getJournalEntries(),
           builder: (BuildContext context,
