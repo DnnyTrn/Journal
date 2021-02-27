@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:journal/widgets/MyAppBar.dart';
 import 'package:journal/widgets/Widgets.dart';
-
 import 'journal_entry_screen.dart';
 import 'journal_screen.dart';
+import 'package:journal/screens/new_entry_screen.dart';
 
 class MainScaffold extends StatefulWidget {
   static const routeName = '/';
@@ -24,6 +24,13 @@ class _MainScaffoldState extends State<MainScaffold> {
       body: LayoutBuilder(
         builder: layoutDecider,
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context)
+                .pushNamed(NewEntry.routeName)
+                .then((value) => setState(() {}));
+          }),
     );
   }
 
