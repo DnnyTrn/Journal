@@ -6,6 +6,10 @@ import 'package:journal/styles.dart';
 
 class EntryJournal extends StatefulWidget {
   static const routeName = 'Journal Entry Screen';
+  final bool showAppBar;
+
+  const EntryJournal({Key key, this.showAppBar = true}) : super(key: key);
+
   @override
   _EntryJournalState createState() => _EntryJournalState();
 }
@@ -14,8 +18,15 @@ class _EntryJournalState extends State<EntryJournal> {
   @override
   Widget build(BuildContext context) {
     //choosing the option to query the db for entry rather than passing as an object
-    final id = ModalRoute.of(context).settings.arguments;
-    final entry = DatabaseManager.getInstance().getEntryById(id);
+    var id = ModalRoute.of(context).settings.arguments;
+    var entry;
+    final db = DatabaseManager.getInstance();
+    if (id == null) {
+      entry = db.getFirstRow();
+    } else {
+      entry = db.getEntryById(id);
+    }
+
     JournalEntry je;
 
     return FutureBuilder<JournalEntry>(
@@ -25,6 +36,7 @@ class _EntryJournalState extends State<EntryJournal> {
         if (snapshot.hasData) {
           je = snapshot.data;
           child = ScaffoldWithSettings(
+            showAppBar: widget.showAppBar,
             title: je.date,
             body: Column(
               children: [
@@ -35,6 +47,7 @@ class _EntryJournalState extends State<EntryJournal> {
           );
         } else {
           child = ScaffoldWithSettings(
+              showAppBar: widget.showAppBar,
               title: EntryJournal.routeName,
               body: Center(child: CircularProgressIndicator()));
         }

@@ -46,12 +46,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 class ScaffoldWithSettings extends StatefulWidget {
   Widget body;
   Widget appBar;
+  final bool showAppBar;
   Widget endDrawer;
   final title;
 
-  ScaffoldWithSettings({this.body, this.appBar, this.endDrawer, this.title}) {
+  ScaffoldWithSettings({
+    this.body,
+    this.showAppBar = true,
+    this.appBar,
+    this.endDrawer,
+    this.title,
+  }) {
     this.endDrawer = SettingsDrawer();
-    this.appBar = MyAppBar.withSettings(widgets: [], title: title);
+    this.appBar =
+        showAppBar ? MyAppBar.withSettings(widgets: [], title: title) : null;
   }
 
   @override

@@ -10,9 +10,19 @@ import 'package:journal/db/database.dart';
 const myJournal = 'My Journal';
 
 class JournalScreen extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = 'Journal Screen';
+  final bool showAppBar;
+
+  const JournalScreen({Key key, this.showAppBar = true}) : super(key: key);
+
   @override
   State createState() => _JournalScreenState();
+  Widget _appBar() {
+    if (showAppBar == true) {
+      return MyAppBar.withSettings(title: myJournal, widgets: []);
+    }
+    return null;
+  }
 }
 
 class _JournalScreenState extends State<JournalScreen> {
@@ -22,7 +32,7 @@ class _JournalScreenState extends State<JournalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar.withSettings(title: myJournal, widgets: []),
+      appBar: widget._appBar(),
       endDrawer: SettingsDrawer(),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),

@@ -10,7 +10,7 @@ class DatabaseManager {
   // static const CREATE_SCHEMA =
   // 'CREATE TABLE IF NOT EXISTS journal_entries(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, body TEXT, rating INTEGER, date TEXT)';
   static const String TABLE_NAME = 'journal_entries';
-
+  static const String GET_1ST_ROW = 'SELECT * FROM $TABLE_NAME LIMIT 1';
   static DatabaseManager _instance;
   final Database db;
   // final String tableName;
@@ -62,13 +62,33 @@ class DatabaseManager {
   }
 
   void deleteRow(id) async {
-    await db.delete(TABLE_NAME, where: "id=?", whereArgs: [id]);
+    try {
+      await db.delete(TABLE_NAME, where: "id=?", whereArgs: [id]);
+    } catch (err) {
+      print(err);
+    }
   }
 
   Future<JournalEntry> getEntryById(int id) async {
-    final List<Map<String, dynamic>> entry =
-        await db.query(TABLE_NAME, where: 'id=?', whereArgs: [id]);
+    List<Map<String, dynamic>> entry;
+    try {
+      entry = await db.query(TABLE_NAME, where: 'id=?', whereArgs: [id]);
+    } catch (err) {
+      print(err);
+      return JournalEntry();
+    }
 
+    return JournalEntry.fromJSON(entry[0]);
+  }
+
+  Future<JournalEntry> getFirstRow() async {
+    var entry;
+    try {
+      entry = await db.rawQuery(GET_1ST_ROW);
+    } catch (err) {
+      print('Caught error: $err');
+      return JournalEntry();
+    }
     return JournalEntry.fromJSON(entry[0]);
   }
 }
