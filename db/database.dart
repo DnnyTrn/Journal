@@ -42,11 +42,15 @@ class DatabaseManager {
   }
 
   void insertRow(JournalEntry journal) async {
-    await db.insert(
-      TABLE_NAME,
-      journal.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    try {
+      await db.insert(
+        TABLE_NAME,
+        journal.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (err) {
+      throw (err);
+    }
   }
 
   Future<List<JournalEntry>> getJournalEntries() async {

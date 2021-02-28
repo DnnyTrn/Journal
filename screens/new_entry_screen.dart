@@ -97,19 +97,25 @@ class _JournalFormState extends State<JournalForm> {
   String validateField(value) =>
       value.isEmpty ? 'This field cannot be blank.' : null;
 
-  void submitForm(BuildContext context) {
+  void submitForm(BuildContext context) async {
     final formState = formKey.currentState;
     if (formState.validate()) {
       formKey.currentState.save();
 
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Saving...')));
 
-      DatabaseManager.getInstance().insertRow(journalEntry);
-
-      // go to My Journal screen after 1 second and successful save
-      Timer(Duration(seconds: 1), () {
-        Navigator.of(context).pop();
-      });
+      try {
+        DatabaseManager.getInstance().insertRow(journalEntry);
+      } catch (err) {
+        print(err);
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('An error has occurred')));
+      } finally {
+        // go to My Journal screen after 1 second
+        Timer(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
+      }
     }
   }
 
