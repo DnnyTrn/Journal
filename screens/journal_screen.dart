@@ -37,16 +37,7 @@ class _JournalScreenState extends State<JournalScreen> {
               child = ListView.builder(
                   itemCount: journal.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                              EntryJournal.routeName,
-                              arguments: journalEntries.data[index].id);
-                        },
-                        trailing: OptionButton(
-                            journal.entries[index], deleteButtonLogic),
-                        title: Text('${journal.entries[index].title}'),
-                        subtitle: Text(journal.entries[index].date));
+                    return JournalListTile(journal, index);
                   });
             } else if (journalEntries.data == null) {
               child = WelcomeWidget();
@@ -66,6 +57,18 @@ class _JournalScreenState extends State<JournalScreen> {
           context.findAncestorStateOfType<MainScaffoldState>();
       parent.valueNotifier.value = 1;
     });
+  }
+
+  ListTile JournalListTile(Journal journal, int index) {
+    return ListTile(
+      onTap: () {
+        Navigator.of(context).pushNamed(EntryJournal.routeName,
+            arguments: journal.entries[index].id);
+      },
+      trailing: OptionButton(journal.entries[index], deleteButtonLogic),
+      title: Text('${journal.entries[index].title}'),
+      subtitle: Text(journal.entries[index].date),
+    );
   }
 }
 
