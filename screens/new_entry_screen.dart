@@ -17,10 +17,6 @@ class NewEntry extends StatelessWidget {
       body: JournalForm(),
     );
   }
-
-  void backToJournal(BuildContext context) {
-    Navigator.of(context).pop();
-  }
 }
 
 class JournalForm extends StatefulWidget {
