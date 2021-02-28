@@ -74,41 +74,12 @@ class _JournalScreenState extends State<JournalScreen> {
                         subtitle: Text(journal.entries[index].date));
                   });
             } else if (snapshot.data == null) {
-              child = Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Placeholder(
-                  color: Colors.red,
-                ),
-              ));
+              child = Center(child: Icon(Icons.book, size: 124.0));
             } else {
               child = Center(child: CircularProgressIndicator());
             }
             return child;
           }),
     );
-  }
-
-  Widget journalBody() {
-    if (journal == null) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (journal.length > 0) {
-      return ListView.builder(
-          itemCount: journal.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-                leading: FlutterLogo(),
-                trailing: Icon(Icons.more_horiz),
-                title: Text(journal.entries[index].title),
-                subtitle: Text(journal.entries[index].body));
-          });
-    }
-    return Text('Welcome');
-  }
-
-  void backToJournal(BuildContext context) {
-    Navigator.of(context).pop();
   }
 }
