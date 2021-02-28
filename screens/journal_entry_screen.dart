@@ -41,6 +41,7 @@ class _EntryJournalState extends State<EntryJournal> {
               children: [
                 Text('${je.title}', style: Styles.titleStyle),
                 Text('${je.body}', style: Styles.bodyStyle),
+                Text('Rating: ${je.rating}', style: Styles.bodyStyle),
               ],
             ),
           );

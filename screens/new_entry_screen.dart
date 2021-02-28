@@ -66,17 +66,19 @@ class _JournalFormState extends State<JournalForm> {
           decoration:
               InputDecoration(labelText: 'Body', border: OutlineInputBorder())),
       SizedBox(height: 10),
-      // DropdownButtonFormField(
-      //   validator: (value) => validateField(value),
-      //   decoration: InputDecoration(
-      //     labelText: 'Rating',
-      //     border: OutlineInputBorder(),
-      //   ),
-      //   items: [DropdownMenuItem(child: Text('1'), value: 1)],
-      //   onChanged: (_) {
-      //     journalEntry.rating = 1;
-      //   },
-      // ),
+      DropdownButtonFormField(
+        validator: (value) => validateChoice(value),
+        decoration: InputDecoration(
+          labelText: 'Rating',
+          border: OutlineInputBorder(),
+        ),
+        items: dropDownItems(5),
+        onChanged: (value) {
+          setState(() {
+            journalEntry.rating = value;
+          });
+        },
+      ),
       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         RaisedButton(
             child: Text('Cancel'),
@@ -89,11 +91,11 @@ class _JournalFormState extends State<JournalForm> {
     ];
   }
 
-  String validateField(String value) {
-    return (value == null || value.isEmpty)
-        ? 'This field cannot be blank.'
-        : null;
-  }
+  String validateChoice(value) =>
+      value == null ? 'This field cannot be blank.' : null;
+
+  String validateField(value) =>
+      value.isEmpty ? 'This field cannot be blank.' : null;
 
   void submitForm(BuildContext context) {
     final formState = formKey.currentState;
@@ -101,9 +103,6 @@ class _JournalFormState extends State<JournalForm> {
       formKey.currentState.save();
 
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Saving...')));
-      // Scaffold.of(context).showSnackBar(SnackBar(
-      //     content: Text(
-      //         'Title:${journalEntry.title}, Body:${journalEntry.body}, Rating:${journalEntry.rating}')));
 
       DatabaseManager.getInstance().insertRow(journalEntry);
 
@@ -112,5 +111,11 @@ class _JournalFormState extends State<JournalForm> {
         Navigator.of(context).pop();
       });
     }
+  }
+
+  List<DropdownMenuItem> dropDownItems(int length) {
+    return List.generate(length, (i) {
+      return DropdownMenuItem<int>(child: Text('${i + 1}'), value: i + 1);
+    });
   }
 }
