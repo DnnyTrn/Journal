@@ -3,6 +3,7 @@ import 'package:journal/widgets/MyAppBar.dart';
 import 'package:journal/db/database.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/styles.dart';
+import 'package:journal/widgets/Widgets.dart';
 
 class EntryJournal extends StatefulWidget {
   static const routeName = 'Journal Entry Screen';
@@ -50,7 +51,7 @@ class _EntryJournalState extends State<EntryJournal> {
           child = ScaffoldWithSettings(
               showAppBar: widget.showAppBar,
               title: EntryJournal.routeName,
-              body: Center(child: CircularProgressIndicator()));
+              body: LoadingWidget());
         }
         return child;
       },
