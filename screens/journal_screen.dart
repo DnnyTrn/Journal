@@ -74,9 +74,9 @@ class _JournalScreenState extends State<JournalScreen> {
                         subtitle: Text(journal.entries[index].date));
                   });
             } else if (snapshot.data == null) {
-              child = Center(child: Icon(Icons.book, size: 124.0));
+              child = WelcomeWidget();
             } else {
-              child = Center(child: CircularProgressIndicator());
+              child = LoadingWidget();
             }
             return child;
           }),

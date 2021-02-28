@@ -76,3 +76,17 @@ class TestScaffold extends StatelessWidget {
     );
   }
 }
+
+class LoadingWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: CircularProgressIndicator());
+  }
+}
+
+class WelcomeWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Center(child: Icon(Icons.book, size: 124.0)));
+  }
+}
