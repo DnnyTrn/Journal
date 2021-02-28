@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:journal/screens/home_screen.dart';
 import 'package:journal/screens/journal_entry_screen.dart';
@@ -31,10 +30,10 @@ class _JournalScreenState extends State<JournalScreen> {
       body: FutureBuilder<List<JournalEntry>>(
           future: db.getJournalEntries(),
           builder: (BuildContext context,
-              AsyncSnapshot<List<JournalEntry>> snapshot) {
+              AsyncSnapshot<List<JournalEntry>> journalEntries) {
             Widget child;
-            if (snapshot.hasData) {
-              journal = Journal(entries: snapshot.data);
+            if (journalEntries.hasData) {
+              journal = Journal(entries: journalEntries.data);
               child = ListView.builder(
                   itemCount: journal.length,
                   itemBuilder: (context, index) {
@@ -42,38 +41,14 @@ class _JournalScreenState extends State<JournalScreen> {
                         onTap: () {
                           Navigator.of(context).pushNamed(
                               EntryJournal.routeName,
-                              arguments: snapshot.data[index].id);
+                              arguments: journalEntries.data[index].id);
                         },
-                        leading: FlutterLogo(),
-                        trailing: IconButton(
-                          icon: Icon(Icons.more_horiz),
-                          onPressed: () {
-                            final action = CupertinoActionSheet(
-                                title: Text('Choose Option'),
-                                actions: [
-                                  CupertinoActionSheetAction(
-                                    onPressed: () {
-                                      db.deleteRow(snapshot.data[index].id);
-                                      Navigator.of(context).pop();
-                                      setState(() {
-                                        MainScaffoldState parent =
-                                            context.findAncestorStateOfType<
-                                                MainScaffoldState>();
-                                        parent.valueNotifier.value = 1;
-                                      });
-                                    },
-                                    isDestructiveAction: true,
-                                    child: Text('Delete'),
-                                  )
-                                ]);
-                            showCupertinoModalPopup(
-                                context: context, builder: (context) => action);
-                          },
-                        ),
+                        trailing: OptionButton(
+                            journal.entries[index], deleteButtonLogic),
                         title: Text('${journal.entries[index].title}'),
                         subtitle: Text(journal.entries[index].date));
                   });
-            } else if (snapshot.data == null) {
+            } else if (journalEntries.data == null) {
               child = WelcomeWidget();
             } else {
               child = LoadingWidget();
@@ -82,4 +57,39 @@ class _JournalScreenState extends State<JournalScreen> {
           }),
     );
   }
+
+  void deleteButtonLogic(JournalEntry je) {
+    db.deleteRow(je.id);
+    Navigator.of(context).pop();
+    setState(() {
+      MainScaffoldState parent =
+          context.findAncestorStateOfType<MainScaffoldState>();
+      parent.valueNotifier.value = 1;
+    });
+  }
 }
+
+//   icon: Icon(Icons.more_horiz),
+//   onPressed: () {
+//     final action = CupertinoActionSheet(
+//         title: Text('Choose Option'),
+//         actions: [
+//           CupertinoActionSheetAction(
+//             onPressed: () {
+//               db.deleteRow(snapshot.data[index].id);
+//               Navigator.of(context).pop();
+//               setState(() {
+//                 MainScaffoldState parent =
+//                     context.findAncestorStateOfType<
+//                         MainScaffoldState>();
+//                 parent.valueNotifier.value = 1;
+//               });
+//             },
+//             isDestructiveAction: true,
+//             child: Text('Delete'),
+//           )
+//         ]);
+//     showCupertinoModalPopup(
+//         context: context, builder: (context) => action);
+//   },
+// ),

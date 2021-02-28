@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:journal/app.dart';
 
@@ -88,5 +89,30 @@ class WelcomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(child: Center(child: Icon(Icons.book, size: 124.0)));
+  }
+}
+
+class OptionButton extends StatelessWidget {
+  final Function buttonLogic;
+  final object;
+  OptionButton(this.object, this.buttonLogic);
+
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.more_horiz),
+      onPressed: () {
+        final action =
+            CupertinoActionSheet(title: Text('Choose Option'), actions: [
+          CupertinoActionSheetAction(
+            onPressed: () {
+              buttonLogic(this.object);
+            },
+            isDestructiveAction: true,
+            child: Text('Delete'),
+          )
+        ]);
+        showCupertinoModalPopup(context: context, builder: (context) => action);
+      },
+    );
   }
 }
