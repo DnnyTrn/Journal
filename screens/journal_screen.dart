@@ -39,21 +39,21 @@ class _JournalScreenState extends State<JournalScreen> {
   Widget futureBuilderHelper(AsyncSnapshot<List<JournalEntry>> journalEntries) {
     Widget child;
     if (journalEntries.hasData) {
-      Journal journal = Journal(entries: journalEntries.data);
+      final journal = journalEntries.data;
       child = ListView.builder(
           itemCount: journal.length,
           itemBuilder: (context, index) {
             return ListTile(
               onTap: () {
                 Navigator.of(context).pushNamed(EntryJournal.routeName,
-                    arguments: journal.entries[index].id);
+                    arguments: journal[index].id);
               },
               trailing: OptionButton(
-                  object: journal.entries[index],
+                  object: journal[index],
                   buttonLogic: deleteButtonLogic,
                   name: 'Delete'),
-              title: Text('${journal.entries[index].title}'),
-              subtitle: Text(journal.entries[index].date),
+              title: Text('${journal[index].title}'),
+              subtitle: Text(journal[index].date),
             );
           });
     } else if (journalEntries.data == null) {
