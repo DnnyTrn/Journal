@@ -19,7 +19,6 @@ class JournalScreen extends StatefulWidget {
 }
 
 class _JournalScreenState extends State<JournalScreen> {
-  Journal journal;
   DatabaseManager db = DatabaseManager.getInstance();
 
   @override
@@ -28,25 +27,41 @@ class _JournalScreenState extends State<JournalScreen> {
       showAppBar: widget.showAppBar,
       title: JournalScreen.routeName,
       body: FutureBuilder<List<JournalEntry>>(
-          future: db.getJournalEntries(),
-          builder: (BuildContext context,
-              AsyncSnapshot<List<JournalEntry>> journalEntries) {
-            Widget child;
-            if (journalEntries.hasData) {
-              journal = Journal(entries: journalEntries.data);
-              child = ListView.builder(
-                  itemCount: journal.length,
-                  itemBuilder: (context, index) {
-                    return JournalListTile(journal, index);
-                  });
-            } else if (journalEntries.data == null) {
-              child = WelcomeWidget();
-            } else {
-              child = LoadingWidget();
-            }
-            return child;
-          }),
+        future: db.getJournalEntries(),
+        builder: (BuildContext context,
+            AsyncSnapshot<List<JournalEntry>> journalEntries) {
+          return futureBuilderHelper(journalEntries);
+        },
+      ),
     );
+  }
+
+  Widget futureBuilderHelper(AsyncSnapshot<List<JournalEntry>> journalEntries) {
+    Widget child;
+    if (journalEntries.hasData) {
+      Journal journal = Journal(entries: journalEntries.data);
+      child = ListView.builder(
+          itemCount: journal.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              onTap: () {
+                Navigator.of(context).pushNamed(EntryJournal.routeName,
+                    arguments: journal.entries[index].id);
+              },
+              trailing: OptionButton(
+                  object: journal.entries[index],
+                  buttonLogic: deleteButtonLogic,
+                  name: 'Delete'),
+              title: Text('${journal.entries[index].title}'),
+              subtitle: Text(journal.entries[index].date),
+            );
+          });
+    } else if (journalEntries.data == null) {
+      child = WelcomeWidget();
+    } else {
+      child = LoadingWidget();
+    }
+    return child;
   }
 
   void deleteButtonLogic(JournalEntry je) {
@@ -58,41 +73,4 @@ class _JournalScreenState extends State<JournalScreen> {
       parent.valueNotifier.value = 1;
     });
   }
-
-  ListTile JournalListTile(Journal journal, int index) {
-    return ListTile(
-      onTap: () {
-        Navigator.of(context).pushNamed(EntryJournal.routeName,
-            arguments: journal.entries[index].id);
-      },
-      trailing: OptionButton(journal.entries[index], deleteButtonLogic),
-      title: Text('${journal.entries[index].title}'),
-      subtitle: Text(journal.entries[index].date),
-    );
-  }
 }
-
-//   icon: Icon(Icons.more_horiz),
-//   onPressed: () {
-//     final action = CupertinoActionSheet(
-//         title: Text('Choose Option'),
-//         actions: [
-//           CupertinoActionSheetAction(
-//             onPressed: () {
-//               db.deleteRow(snapshot.data[index].id);
-//               Navigator.of(context).pop();
-//               setState(() {
-//                 MainScaffoldState parent =
-//                     context.findAncestorStateOfType<
-//                         MainScaffoldState>();
-//                 parent.valueNotifier.value = 1;
-//               });
-//             },
-//             isDestructiveAction: true,
-//             child: Text('Delete'),
-//           )
-//         ]);
-//     showCupertinoModalPopup(
-//         context: context, builder: (context) => action);
-//   },
-// ),

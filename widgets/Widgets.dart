@@ -78,6 +78,8 @@ class TestScaffold extends StatelessWidget {
   }
 }
 
+
+
 class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,10 +94,12 @@ class WelcomeWidget extends StatelessWidget {
   }
 }
 
+// Icon button that displays CupertinoActionSheet when pressed
 class OptionButton extends StatelessWidget {
   final Function buttonLogic;
   final object;
-  OptionButton(this.object, this.buttonLogic);
+  final String name;
+  OptionButton({this.object, this.buttonLogic, this.name = 'null name'});
 
   Widget build(BuildContext context) {
     return IconButton(
@@ -108,7 +112,7 @@ class OptionButton extends StatelessWidget {
               buttonLogic(this.object);
             },
             isDestructiveAction: true,
-            child: Text('Delete'),
+            child: Text('$name'),
           )
         ]);
         showCupertinoModalPopup(context: context, builder: (context) => action);
