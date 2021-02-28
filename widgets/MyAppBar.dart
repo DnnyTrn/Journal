@@ -5,24 +5,22 @@ import 'Widgets.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
   final String title;
-  final List<Widget> widgets;
+  final List<Widget> widgets = List<Widget>();
 
 // use this to make an appbar with the settings drawer
   MyAppBar.withSettings({
     Key key,
     this.backgroundColor = Colors.blue,
     this.title = 'null Title',
-    this.widgets,
   }) : super(key: key) {
     this.widgets.add(gearIcon());
   }
 
-  const MyAppBar(
-      {Key key,
-      this.title = 'null Title',
-      this.backgroundColor = Colors.green,
-      this.widgets = const []})
-      : super(key: key);
+  MyAppBar({
+    Key key,
+    this.title = 'null Title',
+    this.backgroundColor = Colors.green,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +56,7 @@ class ScaffoldWithSettings extends StatefulWidget {
     this.title,
   }) {
     this.endDrawer = SettingsDrawer();
-    this.appBar =
-        showAppBar ? MyAppBar.withSettings(widgets: [], title: title) : null;
+    this.appBar = showAppBar ? MyAppBar.withSettings(title: title) : null;
   }
 
   @override

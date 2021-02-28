@@ -7,8 +7,8 @@ import 'package:journal/styles.dart';
 class EntryJournal extends StatefulWidget {
   static const routeName = 'Journal Entry Screen';
   final bool showAppBar;
-
-  const EntryJournal({Key key, this.showAppBar = true}) : super(key: key);
+  Future<JournalEntry> entry;
+  EntryJournal({Key key, this.showAppBar = true}) : super(key: key);
 
   @override
   _EntryJournalState createState() => _EntryJournalState();
@@ -19,16 +19,17 @@ class _EntryJournalState extends State<EntryJournal> {
   Widget build(BuildContext context) {
     //id can be null to signal screen loaded in landscape mode
     var id = ModalRoute.of(context).settings.arguments;
-    var entry;
+
     final db = DatabaseManager.getInstance();
     if (id == null) {
-      entry = db.getFirstRow(); //query 1st row if in landscape mode
+      widget.entry = db.getFirstRow(); //query 1st row if in landscape mode
     } else {
-      entry = db.getEntryById(id); //this screen is coupled with previous screen
+      widget.entry =
+          db.getEntryById(id); //this screen is coupled with previous screen
     }
 
     return FutureBuilder<JournalEntry>(
-      future: entry,
+      future: widget.entry,
       builder: (BuildContext context, AsyncSnapshot<JournalEntry> snapshot) {
         JournalEntry je;
         Widget child;

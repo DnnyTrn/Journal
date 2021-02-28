@@ -10,7 +10,7 @@ class ScaffoldWithSettings extends StatelessWidget {
 
   ScaffoldWithSettings({this.body, this.appBar, this.endDrawer, this.title}) {
     this.endDrawer = SettingsDrawer();
-    this.appBar = MyAppBar.withSettings(widgets: [], title: title) as AppBar;
+    this.appBar = MyAppBar.withSettings(title: title) as AppBar;
   }
 
   @override

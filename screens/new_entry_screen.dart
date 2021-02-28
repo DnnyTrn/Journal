@@ -13,7 +13,7 @@ class NewEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: SettingsDrawer(),
-      appBar: MyAppBar.withSettings(title: screenName, widgets: []),
+      appBar: MyAppBar.withSettings(title: screenName),
       body: JournalForm(),
     );
   }

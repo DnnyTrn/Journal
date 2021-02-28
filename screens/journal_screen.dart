@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:journal/screens/home_screen.dart';
 import 'package:journal/screens/journal_entry_screen.dart';
 import 'package:journal/widgets/MyAppBar.dart';
 import 'package:journal/models/journal_entry.dart';
@@ -54,7 +55,12 @@ class _JournalScreenState extends State<JournalScreen> {
                                     onPressed: () {
                                       db.deleteRow(snapshot.data[index].id);
                                       Navigator.of(context).pop();
-                                      setState(() {});
+                                      setState(() {
+                                        MainScaffoldState parent =
+                                            context.findAncestorStateOfType<
+                                                MainScaffoldState>();
+                                        parent.valueNotifier.value = 1;
+                                      });
                                     },
                                     isDestructiveAction: true,
                                     child: Text('Delete'),
