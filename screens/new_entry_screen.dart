@@ -4,6 +4,7 @@ import 'package:journal/widgets/MyAppBar.dart';
 import 'dart:async';
 import 'package:journal/widgets/Widgets.dart';
 import 'package:journal/db/database.dart';
+import 'package:journal/styles.dart';
 
 const screenName = 'New Journal Entry';
 
@@ -51,24 +52,21 @@ class _JournalFormState extends State<JournalForm> {
   List<Widget> formFields(BuildContext context) {
     return [
       TextFormField(
-          onSaved: (value) => journalEntry.title = value,
-          validator: (value) => validateField(value),
-          autofocus: true,
-          decoration: InputDecoration(
-              labelText: 'Title', border: OutlineInputBorder())),
+        onSaved: (value) => journalEntry.title = value,
+        validator: (value) => validateField(value),
+        autofocus: true,
+        decoration: Styles.formFieldDecoration('Title'),
+      ),
       SizedBox(height: 10),
       TextFormField(
-          onSaved: (value) => journalEntry.body = value,
-          validator: (value) => validateField(value),
-          decoration:
-              InputDecoration(labelText: 'Body', border: OutlineInputBorder())),
+        onSaved: (value) => journalEntry.body = value,
+        validator: (value) => validateField(value),
+        decoration: Styles.formFieldDecoration('Body'),
+      ),
       SizedBox(height: 10),
       DropdownButtonFormField(
         validator: (value) => validateChoice(value),
-        decoration: InputDecoration(
-          labelText: 'Rating',
-          border: OutlineInputBorder(),
-        ),
+        decoration: Styles.formFieldDecoration('Rating'),
         items: dropDownItems(5),
         onChanged: (value) {
           setState(() {

@@ -8,4 +8,7 @@ class Styles {
   static final dateStyle = TextStyle();
   static final bodyStyle = TextStyle(fontSize: 22);
   static final ratingStyle = TextStyle(fontSize: 14);
+  static InputDecoration formFieldDecoration(String labelText) {
+    return InputDecoration(labelText: labelText, border: OutlineInputBorder());
+  }
 }
