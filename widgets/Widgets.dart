@@ -25,7 +25,7 @@ class SwitcherState extends State<Switcher> {
         .findAncestorStateOfType<MyAppState>(); //get state of MaterialApp
     _switchValue = myApp
         .preferenceTheme; //switch is set to the current theme from SharedPreference object
-    final String myAppKey = MyApp.KEY;
+    final String myAppKey = MyApp.KEY; //remove hard coded as param.
 
     return SwitchListTile(
       title: Text('${widget.switchName}'),
@@ -59,26 +59,11 @@ class SettingsDrawer extends StatelessWidget {
       Switcher(
           switchName: 'Dark Mode', switchIcon: Icon(Icons.lightbulb_outline)),
       Divider(),
-      Switcher(switchName: 'Brightness'),
+      // Switcher(switchName: 'Brightness'),
+      // add more ListTiles or Switchers here
     ]));
   }
 }
-
-class TestScaffold extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          // child: Text('$darkMode'),
-          ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: toggleDarkMode,
-      // ),
-    );
-  }
-}
-
-
 
 class LoadingWidget extends StatelessWidget {
   @override
@@ -95,6 +80,7 @@ class WelcomeWidget extends StatelessWidget {
 }
 
 // Icon button that displays CupertinoActionSheet when pressed
+// pass in function to buttonLogic
 class OptionButton extends StatelessWidget {
   final Function buttonLogic;
   final object;
