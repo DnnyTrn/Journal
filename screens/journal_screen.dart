@@ -52,7 +52,10 @@ class _JournalScreenState extends State<JournalScreen> {
                   object: journal[index],
                   buttonLogic: deleteButtonLogic,
                   name: 'Delete'),
-              title: Text('${journal[index].title}'),
+              title: Text(
+                '${journal[index].title}',
+                overflow: TextOverflow.ellipsis,
+              ),
               subtitle: Text(journal[index].date),
             );
           });
