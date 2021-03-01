@@ -7,4 +7,5 @@ class Styles {
       TextStyle(fontWeight: FontWeight.bold, fontSize: 40);
   static final dateStyle = TextStyle();
   static final bodyStyle = TextStyle(fontSize: 20);
+  static final ratingStyle = TextStyle(fontSize: 16);
 }
