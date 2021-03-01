@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:journal/styles.dart';
 import 'Widgets.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -37,7 +36,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // Size get preferredSize => new Size.fromHeight(appBar.preferredSize.height);
   Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }
 
@@ -63,9 +61,7 @@ class ScaffoldWithSettings extends StatefulWidget {
   _ScaffoldWithSettingsState createState() => _ScaffoldWithSettingsState();
 
   static FloatingActionButton floatingActionButton(
-    BuildContext context,
-    String routeName,
-  ) {
+      BuildContext context, String routeName) {
     return FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => Navigator.of(context).pushNamed(routeName));
