@@ -6,6 +6,6 @@ class Styles {
   static final titleStyle =
       TextStyle(fontWeight: FontWeight.bold, fontSize: 40);
   static final dateStyle = TextStyle();
-  static final bodyStyle = TextStyle(fontSize: 20);
-  static final ratingStyle = TextStyle(fontSize: 16);
+  static final bodyStyle = TextStyle(fontSize: 22);
+  static final ratingStyle = TextStyle(fontSize: 14);
 }

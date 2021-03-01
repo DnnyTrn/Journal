@@ -39,12 +39,16 @@ class _EntryJournalState extends State<EntryJournal> {
           child = ScaffoldWithSettings(
             showAppBar: widget.showAppBar,
             title: je.date,
-            body: Column(
-              children: [
-                Text('${je.title}', style: Styles.titleStyle),
-                Text('${je.body}', style: Styles.bodyStyle),
-                Text('Rating: ${je.rating}', style: Styles.bodyStyle),
-              ],
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${je.title}', style: Styles.titleStyle),
+                  Text('Rating: ${je.rating}', style: Styles.ratingStyle),
+                  Text('${je.body}', style: Styles.bodyStyle),
+                ],
+              ),
             ),
           );
         } else {

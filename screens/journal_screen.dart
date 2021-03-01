@@ -67,6 +67,7 @@ class _JournalScreenState extends State<JournalScreen> {
     return child;
   }
 
+// pass to ButtonLogic widget to use database for delete query
   void deleteButtonLogic(JournalEntry je) {
     db.deleteRow(je.id);
     Navigator.of(context).pop();

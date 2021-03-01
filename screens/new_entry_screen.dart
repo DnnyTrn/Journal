@@ -27,6 +27,7 @@ class JournalForm extends StatefulWidget {
 class _JournalFormState extends State<JournalForm> {
   GlobalKey<FormState> formKey;
   JournalEntry journalEntry;
+  // bool _firstPress = true;
 
   void initState() {
     super.initState();
@@ -79,9 +80,10 @@ class _JournalFormState extends State<JournalForm> {
         RaisedButton(
             child: Text('Cancel'),
             onPressed: () => Navigator.of(context).pop()),
-        RaisedButton(
+        ElevatedButton(
           child: Text('Submit'),
-          onPressed: () async => submitForm(context),
+          onPressed: () async =>
+              submitForm(context), //implement a way to disable double presses
         )
       ])
     ];
