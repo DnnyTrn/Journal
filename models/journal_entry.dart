@@ -11,7 +11,7 @@ class JournalEntry {
     this.title = 'null title',
     this.body = 'null body',
   }) {
-    this.date = new DateFormat("MMMM d, yyyy").format(DateTime.now());
+    this.date = new DateFormat("EEEE, MMMM d, yyyy").format(DateTime.now());
   }
 
   JournalEntry.fromJSON(Map<String, dynamic> json)
